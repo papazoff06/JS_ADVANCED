@@ -1,33 +1,30 @@
-function roadRadar(speed, area){
+function roadRadar(speed, area) {
+    speed = Number(speed);
+
     let obj = {
         motorway: 130,
         interstate: 90,
         city: 50,
         residential: 20
-    }
+    };
 
     let speedLimit = obj[area];
-    let difference = speed - obj[area];
 
-    if (obj[area] > speed){
-        console.log(`Driving ${speed} km/h in a ${speedLimit} zone`)
-    }
-    else 
-        console.log(`The speed is ${difference} km/h faster than the allowed speed of ${speedLimit} - ${getStatus(difference)}`)
+    if (speed <= speedLimit) {
+        console.log(`Driving ${speed} km/h in a ${speedLimit} zone`);
+    } else {
+        let difference = speed - speedLimit;
+        let status = '';
 
-    
-    function getStatus(diff){
-        
-        if (difference <= 20){
-            return 'speeding'
+        if (difference <= 20) {
+            status = 'speeding';
+        } else if (difference <= 40) {
+            status = 'excessive speeding';
+        } else {
+            status = 'reckless driving';
         }
-        else if(difference <= 40){
-            return "excessive speeding"
-        }
-        else if( difference > 40){
-            return 'reckless driving'
-        }
-            
+
+        console.log(`The speed is ${difference} km/h faster than the allowed speed of ${speedLimit} - ${status}`);
     }
 }
 
