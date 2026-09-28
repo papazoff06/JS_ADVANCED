@@ -29,12 +29,12 @@
 
             let result = ['<table>'];
             
-            result.push(`<tr>${headings.map(h => `<th>${h}</th>`).join('')}</tr>`);
+            result.push(`<tr>${headings.map(h => `<th>${escapeHTML(h)}</th>`).join('')}</tr>`);
             
             for( record of data){
                 let row = ['<tr>'];
                     for(let prop of headings){
-                        row.push(`<td>${record[prop]}</td>`);
+                        row.push(`<td>${escapeHTML(record[prop])}</td>`);
                     }
                  
                 row.push(['</tr>']);
@@ -42,10 +42,35 @@
             }
             result.push('</table>')
             return result.join('\n');
+
+            function escapeHTML(value){
+            if(typeof value != 'string'){
+                return value;
+            }
+            return value.replace(/(<|>|&|;)/g, (math) => ({
+                '<' : '&lt', 
+                '>' : '&gt',
+                '&' : '&amp',
+                ';' : '&semi',
+                ' ' : '&nbsp'
+            }[math]))
+        }
         }
         window.onload = function(){
             let container = document.getElementById('wrapper');
-            container.innerHTML = fromJSONToHTMLTable(['[{"Name":"Stamat","Price":5.5},{"Name":"Rumen","Price":6}]']);
+            container.innerHTML = fromJSONToHTMLTable(`[{"Name":"Pesho",
+    "Score":4,
+    " Grade":8},
+   {"Name":"Gosho",
+    "Score":5,
+    " Grade":8},
+   {"Name":"Angel",
+    "Score":5.50,
+    " Grade":10}]`
+);
+
+        
+
         };
     </script>
 </body>
