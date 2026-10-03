@@ -1,6 +1,5 @@
 function solve(n, k) {
-    // Създаваме масив с първи елемент 1 по алтернативен начин
-    let sequence = Array.of(1);
+    let sequence = [1,];
 
     for (let i = 1; i < n; i++) {
         let start = Math.max(0, i - k);
