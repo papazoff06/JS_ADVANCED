@@ -1,7 +1,7 @@
 function rectangle(width, height, color){
     let[first, ...rest] = color;
     let upper = first.toUpperCase() + rest.join('');
-    return{
+    return {
         width: width,
         height: height,
         color: upper,
