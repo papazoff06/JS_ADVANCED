@@ -7,4 +7,4 @@ function evenPositionElement(arr){
     console.log(result.join(' '))
 }
 
-evenPositionElement(['20', '30', '40', '50', '60'])
+evenPositionElement(['20', '30', '40', '50', '60'])         
