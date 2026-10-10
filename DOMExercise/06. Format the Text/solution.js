@@ -1,3 +1,6 @@
 function solve() {
-  //TODO
+    let dataRef = document.getElementById('input');
+    let result = '';
+    
+    console.log(result)
 }
