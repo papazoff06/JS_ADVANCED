@@ -1,8 +1,35 @@
 function solve() {
    document.querySelector('#btnSend').addEventListener('click', onClick);
+   let textAreaRef = document.getElementsByTagName('textarea')[0];
 
+   
    function onClick () {
-      //   TODO:
+      let data = textAreaRef.value;
+      let restaurantData = JSON.parse(data);
+
+      let pizzasObj = {};
+      for(let row of restaurantData){ //PizzaHut - Peter 500, George 300, Mark 800
+         let [restName, info] = row.split(' - '); //['PizzaHut', 'Peter 500, George 300, Mark 800']
+         let workerInfo = info.split(', '); // ['Peter 500', 'George 300', 'Mark 800']
+
+
+         if(!pizzasObj.hasOwnProperty(restName)){
+            pizzasObj[restName] = {
+               avgSalary: 0,
+               bestSalary: 0,
+               workers: []
+            }
+         }
+
+         
+         for(let row of workerInfo){
+            console.log(row)
+            let [name, salary] = row.split(' ');
+            if (salary > pizzasObj[restName].bestSalary){
+               pizzasObj[restName].bestSalary = salary;
+            }
+         }
+      }
       
    }
 }
