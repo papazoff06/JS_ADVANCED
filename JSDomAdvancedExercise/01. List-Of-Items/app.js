@@ -1,7 +1,7 @@
 function addItem() {
     let text = document.getElementById('newItemText').value;
    let li = document.createElement('li');
-   li.appendChild(document.createTextNode(text));
+   li.textContent = text
    document.getElementById('items').appendChild(li)
    
    
