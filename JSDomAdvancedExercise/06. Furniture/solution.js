@@ -9,94 +9,100 @@ function solve() {
   let buyButton = Array.from(buttons)[1];
   generatebutton.addEventListener('click', createRow);
   buyButton.addEventListener('click', showOutPut);
-  
 
-  function createRow(ev){
-    for(let el of JSON.parse(inputData.value)){
-        let furnitureName = el.name;
-        let imgData = el.img;
-        let furniturePrice = Number(el.price);
-        let furnitureDecFactor = Number(el.decFactor)
-      
-        let tr = document.createElement('tr'); //here have to upend when all td re ready!!!
 
-        let tdImg = createTd();
-        let img = createImg();
-        img.src = imgData;
-        tdImg.appendChild(img);
-        tr.appendChild(tdImg);
+  function createRow(ev) {
+    for (let el of JSON.parse(inputData.value)) {
+      let furnitureName = el.name;
+      let imgData = el.img;
+      let furniturePrice = Number(el.price);
+      let furnitureDecFactor = Number(el.decFactor)
 
-        let tdName = createTd();
-        let pName = createP();
-        pName.textContent = furnitureName;
-        tdName.appendChild(pName);
+      let tr = document.createElement('tr'); //here have to upend when all td re ready!!!
 
-        let tdPrice = createTd();
-        let pPrice = createP();
-        pPrice.textContent = furniturePrice;
-        tdPrice.appendChild(pPrice);
+      let tdImg = createTd();
+      let img = createImg();
+      img.src = imgData;
+      tdImg.appendChild(img);
+      tr.appendChild(tdImg);
 
-        let tdDecFac = createTd();
-        let pDecFAc = createP();
-        pDecFAc.textContent = furnitureDecFactor;
-        tdDecFac.appendChild(pDecFAc);
+      let tdName = createTd();
+      let pName = createP();
+      pName.textContent = furnitureName;
+      tdName.appendChild(pName);
 
-        let tdCheck = createTd();
-        let input = document.createElement('input');
-        input.type = 'checkbox';
+      let tdPrice = createTd();
+      let pPrice = createP();
+      pPrice.textContent = furniturePrice;
+      tdPrice.appendChild(pPrice);
 
-        tdCheck.appendChild(input);
+      let tdDecFac = createTd();
+      let pDecFAc = createP();
+      pDecFAc.textContent = furnitureDecFactor;
+      tdDecFac.appendChild(pDecFAc);
 
-        tr.appendChild(tdImg);
-        tr.appendChild(tdName);
-        tr.appendChild(tdPrice);
-        tr.appendChild(tdDecFac);
-        tr.appendChild(tdCheck);
+      let tdCheck = createTd();
+      let input = document.createElement('input');
+      input.type = 'checkbox';
 
-        document.getElementsByTagName('tbody')[0].appendChild(tr);
-        
-      function createTd(){
-          return document.createElement('td');
+      tdCheck.appendChild(input);
+
+      tr.appendChild(tdImg);
+      tr.appendChild(tdName);
+      tr.appendChild(tdPrice);
+      tr.appendChild(tdDecFac);
+      tr.appendChild(tdCheck);
+
+      document.getElementsByTagName('tbody')[0].appendChild(tr);
+
+      function createTd() {
+        return document.createElement('td');
       }
-      function createImg(){
+      function createImg() {
         return document.createElement('img');
       }
-      function createP(){
+      function createP() {
         return document.createElement('p');
       }
     }
   }
 
-  function showOutPut(ev){
+  function showOutPut(ev) {
     let counter = 0;
     let rows = document.querySelectorAll('tbody tr');
     let totalPrice = 0;
     let avgFactor = 0;
     let arrNames = [];
-    
-    for(let row of rows){
-      
-      let midleResult = '';
-      
-      
+
+
+    for (let row of rows) {
+
+
+
       let checkBoxRef = row.lastElementChild;
       let checkBox = checkBoxRef.querySelector('input');
-      if(checkBox.checked){
-        counter ++;
-        let name = row.children[1];
-        arrNames.push(name.textContent);
-        midleResult += `Bought furniture: ${arrNames.join(', ')}\n`
+      if (checkBox && checkBox.checked) {
+        counter++;
+        let name = row.children[1].querySelector('p').textContent.trim(); //row.children[1].querySelector('p').textContent.trim();
+        arrNames.push(name);
+        // midleResult += `Bought furniture: ${arrNames.join(', ')}\n`
 
 
         let price = row.children[2];
         totalPrice += Number(price.textContent);
-        midleResult += `Total price: ${totalPrice.toFixed(2)}\n`;
+        // midleResult += `Total price: ${totalPrice.toFixed(2)}\n`;
 
         let avgDecFac = Number(row.children[3].textContent);
         avgFactor += avgDecFac;
-        midleResult += `Average decoration factor: ${(avgFactor / counter).toFixed(2)}`
-        outputData.value = midleResult;
+
+
       }
+    }
+    if (arrNames.length > 0) {
+      let midleResult = `Bought furniture: ${arrNames.join(', ')}\n`;
+      midleResult += `Total price: ${totalPrice.toFixed(2)}\n`
+      midleResult += `Average decoration factor: ${avgFactor / arrNames.length}`
+      outputData.value = midleResult;
     }
   }
 }
